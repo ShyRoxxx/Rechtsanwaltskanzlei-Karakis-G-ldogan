@@ -6,7 +6,7 @@ import { firm } from "@/lib/content";
 import pointsJson from "@/lib/map-points.json";
 
 type Pt = { x: number; y: number };
-type MapPts = { name: string; points: Record<string, Pt> };
+type MapPts = { name: string; w: number; points: Record<string, Pt> };
 const points = pointsJson as unknown as MapPts[];
 import portrait from "@/public/img/penbe-gueldogan.webp";
 
@@ -88,6 +88,9 @@ function MapMarkers() {
           </span>
           <span className="map-chip chip-park" data-intro="chip" style={{ "--d": 2, left: `${m.points.parken.x}%`, top: `${m.points.parken.y}%` } as React.CSSProperties}>
             <SquareParking size={15} strokeWidth={1.75} aria-hidden /> Parkplatz am Zentrum
+          </span>
+          <span className="walk-ring" aria-hidden style={{ left: `${m.points.kanzlei.x}%`, top: `${m.points.kanzlei.y}%`, width: `${(274 / m.w) * 200}%` }}>
+            <span className="walk-ring-label">400 m</span>
           </span>
           <span className="pin" style={{ left: `${m.points.kanzlei.x}%`, top: `${m.points.kanzlei.y}%` }}>
             <span className="pin-ring" aria-hidden />
