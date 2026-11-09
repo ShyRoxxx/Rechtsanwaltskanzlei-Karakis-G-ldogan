@@ -85,12 +85,12 @@ export default function ContactForm({ idPrefix = "f" }: { idPrefix?: string }) {
         <div className="field">
           <label htmlFor={id("name")}>Name</label>
           <input id={id("name")} name="name" autoComplete="name" aria-invalid={!!errors.name} aria-describedby={errors.name ? id("name-err") : undefined} />
-          {errors.name && <p id={id("name-err")} className="err">{errors.name}</p>}
+          {errors.name && <p id={id("name-err")} className="err" role="alert">{errors.name}</p>}
         </div>
         <div className="field">
           <label htmlFor={id("phone")}>Telefon für den Rückruf</label>
           <input id={id("phone")} name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="z. B. 0511 …" aria-invalid={!!errors.phone} aria-describedby={errors.phone ? id("phone-err") : undefined} />
-          {errors.phone && <p id={id("phone-err")} className="err">{errors.phone}</p>}
+          {errors.phone && <p id={id("phone-err")} className="err" role="alert">{errors.phone}</p>}
         </div>
         <div className="field">
           <label htmlFor={id("area")}>Rechtsgebiet</label>
@@ -109,8 +109,8 @@ export default function ContactForm({ idPrefix = "f" }: { idPrefix?: string }) {
         </div>
         <div className="field">
           <label htmlFor={id("email")}>E-Mail <span className="font-normal text-[var(--text-3)]">(freiwillig)</span></label>
-          <input id={id("email")} name="email" type="email" autoComplete="email" aria-invalid={!!errors.email} aria-describedby={errors.email ? id("email-err") : undefined} />
-          {errors.email && <p id={id("email-err")} className="err">{errors.email}</p>}
+          <input id={id("email")} name="email" type="email" autoComplete="email" spellCheck={false} aria-invalid={!!errors.email} aria-describedby={errors.email ? id("email-err") : undefined} />
+          {errors.email && <p id={id("email-err")} className="err" role="alert">{errors.email}</p>}
         </div>
         <div className="field">
           <label htmlFor={id("deadline")}>Läuft eine Frist? <span className="font-normal text-[var(--text-3)]">(freiwillig)</span></label>
@@ -118,7 +118,7 @@ export default function ContactForm({ idPrefix = "f" }: { idPrefix?: string }) {
         </div>
         <div className="field sm:col-span-2">
           <label htmlFor={id("message")}>Worum geht es, in ein, zwei Sätzen? <span className="font-normal text-[var(--text-3)]">(freiwillig)</span></label>
-          <textarea id={id("message")} name="message" maxLength={600} placeholder="z. B. Kündigung am 3. November erhalten, Arbeitgeber mit 25 Beschäftigten" />
+          <textarea id={id("message")} name="message" maxLength={600} placeholder="z. B. Kündigung am 3. November erhalten, Arbeitgeber mit 25 Beschäftigten …" />
         </div>
       </div>
       <div className="field mt-5">
@@ -128,7 +128,7 @@ export default function ContactForm({ idPrefix = "f" }: { idPrefix?: string }) {
             Die Kanzlei darf meine Angaben verwenden, um mich zurückzurufen. Mehr in der <Link href="/datenschutz" className="link-u">Datenschutzerklärung</Link>.
           </span>
         </label>
-        {errors.consent && <p id={id("consent-err")} className="err">{errors.consent}</p>}
+        {errors.consent && <p id={id("consent-err")} className="err" role="alert">{errors.consent}</p>}
       </div>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <button type="submit" className="btn btn-primary">

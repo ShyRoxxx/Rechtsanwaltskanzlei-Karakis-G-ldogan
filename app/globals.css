@@ -79,6 +79,8 @@ body {
   overflow-x: clip;
 }
 
+a, button, label, summary, input, select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
 ::selection { background: var(--accent); color: #fff; }
 
 :focus-visible {
@@ -201,7 +203,7 @@ html.reduce-motion .mesh-blob { animation: none; }
 .menu-lines[data-open] i:last-child { transform: rotate(-45deg); }
 
 .mobile-menu {
-  position: fixed; inset: 0; z-index: 45; background: var(--paper);
+  position: fixed; inset: 0; z-index: 45; background: var(--paper); overscroll-behavior: contain; overflow-y: auto;
   opacity: 0; visibility: hidden; transition: opacity var(--t-mid) var(--ease), visibility 0s linear var(--t-mid);
 }
 .mobile-menu[data-open] { opacity: 1; visibility: visible; transition: opacity var(--t-mid) var(--ease); }
@@ -293,6 +295,10 @@ html.reduce-motion .mobile-menu li, html.reduce-motion .mobile-menu-foot { trans
   .hero-cta .btn { width: 100%; }
 }
 
+@media (min-width: 600px) and (max-width: 899px) {
+  .hero-map { height: clamp(300px, 34svh, 380px); }
+  .hero-map-canvas { width: 1040px; height: 800px; left: calc(45% - 520px); top: calc(50% - 400px); }
+}
 @media (min-width: 900px) {
   .hero { min-height: max(100svh, 700px); padding-top: 0; justify-content: center; }
   .hero-map { position: absolute; top: 0; right: 0; bottom: 0; left: auto; width: 58%; height: auto; margin: 0; border-radius: 0; box-shadow: none;
