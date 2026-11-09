@@ -48,8 +48,7 @@ export default function ContactForm({ idPrefix = "f" }: { idPrefix?: string }) {
       `Rechtsgebiet: ${v("area") || "nicht angegeben"}`,
       `Rückruf am besten: ${v("time")}`,
       v("deadline") && `Frist läuft bis: ${v("deadline")}`,
-      "",
-      v("message") && `Worum es geht (kurz):\n${v("message")}`,
+      v("message") && `\nWorum es geht (kurz):\n${v("message")}`,
     ].filter(Boolean).join("\n");
     const subject = `Anfrage Erstgespräch – ${v("area") || "Rechtsfrage"}`;
     window.location.href = `mailto:${firm.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
