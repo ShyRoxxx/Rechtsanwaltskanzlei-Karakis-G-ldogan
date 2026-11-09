@@ -1,16 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { areas, moreAreas } from "@/lib/content";
 import LetterCard from "./LetterCard";
 import Lines from "./Lines";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { loadGsap } from "@/lib/gsap";
 
 const TILT = [-2.2, 1.6, -1.2, 2, -1.8];
 
@@ -24,8 +20,12 @@ export default function AreasLetter() {
   const [active, setActive] = useState(0);
   const current = useRef(0);
 
-  useGSAP(
-    () => {
+  useEffect(() => {
+    let cancelled = false;
+    let revert: (() => void) | undefined;
+    loadGsap().then(({ gsap, ScrollTrigger }) => {
+      if (cancelled || !root.current) return;
+      const ctx = gsap.context(() => {
       const reduce = document.documentElement.classList.contains("reduce-motion");
       const q = gsap.utils.selector(root);
       const cards = q<HTMLElement>(".letter-slot");
@@ -65,9 +65,14 @@ export default function AreasLetter() {
           onToggle: (self) => self.isActive && show(i),
         });
       });
-    },
-    { scope: root },
-  );
+      }, root);
+      revert = () => ctx.revert();
+    });
+    return () => {
+      cancelled = true;
+      revert?.();
+    };
+  }, []);
 
   return (
     <section ref={root} className="section areas" aria-labelledby="areas-h">

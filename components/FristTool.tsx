@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, CalendarDays, Info } from "lucide-react";
 import { fristen, type FristId } from "@/lib/content";
 import { computeFrist, fmtDate, toInputValue } from "@/lib/fristen";
@@ -23,7 +23,10 @@ export default function FristTool({ initial = "kuendigung" as FristId }: { initi
     return computeFrist(frist, new Date(y, m - 1, d), abroad);
   }, [date, frist, abroad]);
 
-  const today = toInputValue(new Date());
+  const dateRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (dateRef.current) dateRef.current.max = toInputValue(new Date());
+  }, []);
   const tone = !result ? "idle" : result.daysLeft < 0 ? "over" : result.daysLeft <= 5 ? "soon" : "ok";
 
   return (
@@ -45,7 +48,7 @@ export default function FristTool({ initial = "kuendigung" as FristId }: { initi
           <label htmlFor="frist-datum" className="frist-legend">2 · {frist.start}</label>
           <div className="frist-input">
             <CalendarDays size={18} strokeWidth={1.75} aria-hidden />
-            <input id="frist-datum" suppressHydrationWarning type="date" value={date} max={today} onChange={(e) => setDate(e.target.value)} />
+            <input ref={dateRef} id="frist-datum" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </div>
           {id === "erbe" && (
             <label className="frist-check">

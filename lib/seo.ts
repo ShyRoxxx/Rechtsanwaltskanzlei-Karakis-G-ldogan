@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { SITE_URL, firm, serviceArea } from "./content";
 
+export const OG_IMAGE = { url: "/og.jpg", width: 1200, height: 630, alt: "Rechtsanwaltskanzlei Karakis Güldogan · Hannover — Ihr Recht hat hier eine Adresse." };
+
 export function pageMeta({ title, description, path }: { title: string; description: string; path: string }): Metadata {
   return {
     title,
     description,
     alternates: { canonical: path },
-    openGraph: { title: `${title} · ${firm.short}`, description, url: path },
+    openGraph: { title: `${title} · ${firm.short}`, description, url: path, images: [OG_IMAGE] },
   };
 }
 
@@ -17,7 +19,7 @@ export function legalServiceLd() {
     "@id": `${SITE_URL}/#kanzlei`,
     name: firm.name,
     url: SITE_URL,
-    image: `${SITE_URL}/opengraph-image`,
+    image: `${SITE_URL}/og.jpg`,
     logo: `${SITE_URL}/brand/logo-karakis-gueldogan.png`,
     telephone: firm.phone,
     faxNumber: "+49 511 5390754",

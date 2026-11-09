@@ -178,7 +178,7 @@ p { text-wrap: pretty; }
 .field .hint { color: var(--text-3); font-size: var(--fs-sm); margin-top: 0.35rem; }
 
 /* Reveal-Grundzustand nur, wenn JS läuft und Bewegung erlaubt ist */
-html.js:not(.reduce-motion) [data-reveal] { opacity: 0; }
+html.js:not(.reduce-motion) [data-reveal="lines"]:not(.page-title) { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .mesh-blob { animation: none; }
@@ -232,7 +232,7 @@ html.reduce-motion .mesh-blob { animation: none; }
 .hero { position: relative; display: flex; flex-direction: column; padding-top: calc(var(--header-h) + 0.25rem); background: var(--paper); }
 .hero-map { position: relative; margin: 0 var(--gutter); height: clamp(250px, 36svh, 340px); border-radius: var(--radius-l); overflow: hidden; background: #c9d3d3; isolation: isolate; box-shadow: inset 0 0 0 1px var(--line); }
 .hero-map-move { position: absolute; inset: 0; will-change: transform; }
-.hero-map-canvas { position: absolute; width: 700px; height: 500px; left: calc(40% - 350px); top: calc(50% - 250px); transform-origin: 50% 50%; }
+.hero-map-canvas { position: absolute; width: 520px; height: 400px; left: calc(40% - 260px); top: calc(50% - 200px); transform-origin: 50% 50%; }
 .hero-map-img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .markers { position: absolute; inset: 0; }
 .markers-desk { display: none; }
@@ -264,8 +264,8 @@ html.reduce-motion .mesh-blob { animation: none; }
 }
 .chip-bahn { transform: translate(-112%, -250%); }
 .chip-park { transform: translate(-10%, 120%); }
-.markers-mob .chip-bahn { transform: translate(-108%, -250%); }
-.markers-mob .chip-park { transform: translate(-45%, 230%); }
+.markers-mob .chip-bahn { transform: translate(-50%, -330%); }
+.markers-mob .chip-park { display: none; }
 
 .hero-card {
   position: relative; z-index: 4; display: flex; align-items: center; gap: 0.9rem;
@@ -304,9 +304,24 @@ html.reduce-motion .mesh-blob { animation: none; }
 @media (min-width: 1500px) {
   .hero-card { left: calc(50% + 2rem); }
 }
-html.js:not(.reduce-motion) .hero [data-intro] { opacity: 0; }
-html.js:not(.reduce-motion) .hero .hero-line .line-in { transform: translateY(110%); }
-html.js:not(.reduce-motion) .hero .pin-drop { opacity: 0; }
+/* Lade-Inszenierung — reines CSS, startet mit dem ersten Bild, ohne auf JavaScript zu warten */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-map-canvas { animation: map-settle 1.8s var(--ease) both; }
+  .hero-line .line-in { animation: line-rise 1.1s var(--ease) both; animation-delay: calc(0.12s + var(--d, 0) * 0.09s); }
+  .hero [data-intro="text"] { animation: fade-rise 0.9s var(--ease) both; animation-delay: calc(0.42s + var(--d, 0) * 0.08s); }
+  .hero [data-intro="card"] { animation: fade-rise 1s var(--ease) both; animation-delay: 0.75s; }
+  .pin-drop { animation: pin-drop 0.9s cubic-bezier(0.34, 1.7, 0.5, 1) both; animation-delay: 0.55s; }
+  .pin-ring { animation: pin-ring 1.6s cubic-bezier(0.2, 0.7, 0.3, 1) both; animation-delay: 1s; }
+  .hero [data-intro="chip"] { animation: chip-pop 0.7s var(--ease) both; animation-delay: calc(0.95s + var(--d, 0) * 0.12s); }
+  .page-title .line-in { animation: line-rise 0.9s var(--ease) both; }
+  .page-title .line:nth-child(2) .line-in { animation-delay: 0.08s; }
+}
+@keyframes map-settle { from { scale: 1.06; } }
+@keyframes line-rise { from { transform: translateY(110%) skewY(5deg); } }
+@keyframes fade-rise { from { opacity: 0; translate: 0 18px; } }
+@keyframes pin-drop { from { opacity: 0; translate: 0 -46px; } }
+@keyframes pin-ring { from { opacity: 0.7; scale: 0.3; } to { opacity: 0; scale: 3.2; } }
+@keyframes chip-pop { from { opacity: 0; translate: 0 10px; scale: 0.92; } }
 
 /* ---------- Brief auf dem Tisch ---------- */
 .areas-intro { max-width: 46rem; }
@@ -503,3 +518,4 @@ html.reduce-motion .faq[open] .faq-a { animation: none; }
   .legal-text p, .legal-text li { margin-top: 0.8rem; color: var(--text-2); max-width: 44rem; }
   .placeholder-note { display: flex; gap: 0.75rem; padding: 1rem 1.25rem; border-radius: var(--radius-m); background: #fdf3dc; color: #5c4206; border: 1px solid #ecd59a; max-width: 44rem; }
 }
+@layer components { .letter-slot:not(:first-child) { opacity: 0; visibility: hidden; } }

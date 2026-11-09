@@ -7,18 +7,18 @@ import Footer from "@/components/Footer";
 import ThumbBar from "@/components/ThumbBar";
 import Motion from "@/components/Motion";
 import JsonLd from "@/components/JsonLd";
-import { legalServiceLd } from "@/lib/seo";
+import { legalServiceLd, OG_IMAGE } from "@/lib/seo";
 
 const young = Young_Serif({
   weight: "400",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-young",
   display: "swap",
   adjustFontFallback: true,
 });
 const atkinson = Atkinson_Hyperlegible({
   weight: ["400", "700"],
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-atkinson",
   display: "swap",
 });
@@ -39,7 +39,9 @@ export const metadata: Metadata = {
     title: `${firm.name} · Hannover`,
     description:
       "Ihre Anwältin am Mühlenberger Markt: Arbeit, Familie, Verkehr, Miete, Erbe — auf Deutsch und Türkisch.",
+    images: [OG_IMAGE],
   },
+  twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false },
 };
 

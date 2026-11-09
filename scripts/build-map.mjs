@@ -83,14 +83,15 @@ results.push(await build({
 await writeFile(new URL("../lib/map-points.json", import.meta.url), JSON.stringify(results, null, 2));
 console.log(JSON.stringify(results, null, 2));
 
-// Ausschnitt fürs Handy: 1400 × 1000 rund um die Kanzlei
+// Ausschnitt fürs Handy: 1040 × 800 rund um die Kanzlei
 {
   const m = results[0];
   const px = Math.round((m.points.kanzlei.x / 100) * m.w), py = Math.round((m.points.kanzlei.y / 100) * m.h);
-  const left = Math.max(0, Math.min(m.w - 1400, px - 700)), top = Math.max(0, Math.min(m.h - 1000, py - 500));
+  const CW = 1040, CH = 800;
+  const left = Math.max(0, Math.min(m.w - CW, px - CW / 2)), top = Math.max(0, Math.min(m.h - CH, py - CH / 2));
   const src = new URL("../assets/muehlenberg.webp", import.meta.url).pathname;
-  await sharp(src).extract({ left, top, width: 1400, height: 1000 }).avif({ quality: 50 }).toFile(new URL("muehlenberg-m.avif", OUT).pathname);
-  const rel = (k) => ({ x: +((((m.points[k].x / 100) * m.w - left) / 1400) * 100).toFixed(2), y: +((((m.points[k].y / 100) * m.h - top) / 1000) * 100).toFixed(2) });
-  results.push({ name: "muehlenberg-m", w: 1400, h: 1000, points: { kanzlei: rel("kanzlei"), stadtbahn: rel("stadtbahn"), parken: rel("parken") } });
+  await sharp(src).extract({ left, top, width: CW, height: CH }).avif({ quality: 42 }).toFile(new URL("muehlenberg-m.avif", OUT).pathname);
+  const rel = (k) => ({ x: +((((m.points[k].x / 100) * m.w - left) / CW) * 100).toFixed(2), y: +((((m.points[k].y / 100) * m.h - top) / CH) * 100).toFixed(2) });
+  results.push({ name: "muehlenberg-m", w: CW, h: CH, points: { kanzlei: rel("kanzlei"), stadtbahn: rel("stadtbahn"), parken: rel("parken") } });
   await writeFile(new URL("../lib/map-points.json", import.meta.url), JSON.stringify(results, null, 2));
 }
