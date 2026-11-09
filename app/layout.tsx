@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ThumbBar from "@/components/ThumbBar";
 import Motion from "@/components/Motion";
+import ScrollManager from "@/components/ScrollManager";
 import JsonLd from "@/components/JsonLd";
 import { legalServiceLd, OG_IMAGE } from "@/lib/seo";
 
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="inhalt">{children}</main>
         <Footer />
         <ThumbBar />
+        <ScrollManager />
         <Motion />
         <JsonLd data={legalServiceLd()} />
       </body>

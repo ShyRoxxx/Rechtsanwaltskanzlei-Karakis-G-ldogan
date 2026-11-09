@@ -54,4 +54,5 @@
 
 ## Updates
 
-_(Rückmeldungen des Inhabers hier als „Update n“ oben anhängen.)_
+### Update 1 — Links landen am Seitenende (09.11.2026)
+Rückmeldung: Nach Klick auf einen Link (z. B. „Erstgespräch anfragen“) landete man am Footer statt am Inhalt. Ursache: Next.js scrollte beim Seitenwechsel nicht nach oben, Anker-Sprünge landeten falsch. Fix: `components/ScrollManager.tsx` scrollt bei jedem Seitenwechsel an den Anfang bzw. zum Anker unterhalb der Kopfzeile; Zurück/Vor behält die Position.
